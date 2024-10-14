@@ -2,7 +2,8 @@
 import { ref, computed } from 'vue'
 
 const props = defineProps({
-  courses: Array
+  courses: Array,
+  isLoading: Boolean
 })
 
 const searchValue = ref('')
@@ -33,7 +34,8 @@ const filteredCourses = computed(() => {
         />
       </div>
 
-      <!-- Courses Grid -->
+      <div v-if="isLoading" class="flex justify-center items-center h-screen mt-10"><svg class='w-24 h-24 animate-spin' fill='#1e40af' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg></div>
+
       <div v-if="filteredCourses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="course in filteredCourses" :key="course._id" class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
           <h2 class="text-2xl font-semibold text-blue-600 mb-4">{{ course.title }}</h2>

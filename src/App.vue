@@ -3,13 +3,16 @@ import{ ref, onMounted} from 'vue'
 import BootcampFeeds from './components/BootcampFeeds.vue';
 import customInstance from './axios_client.js'
 const courses = ref([])
+const isLoading = ref(false)
 const fetchData = async () => {
         try {
+          isLoading.value = true
           const response = await customInstance.get('/api/v1/courses');
           console.log(response.data)
          courses.value = response.data.data;
-         
+         isLoading.value = false
         } catch (err) {
+         isLoading.value = false
             console.log(err)
           alert('Error fetching data');
         }
@@ -57,7 +60,7 @@ const coursesData = {
 
 <template>
 <div>
-  <BootcampFeeds :courses="courses" />
+  <BootcampFeeds :courses="courses" :isLoading="isLoading" />
 </div>
 </template>
 
