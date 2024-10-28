@@ -1,7 +1,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import customInstance from '../axios_client';
-import BootcampDetails from '../components/BootcampDetails.vue';
+import BootcampDetails from '../components/CourseDetails.vue';
 import { useNotification } from "@kyvg/vue3-notification";
 import { useRoute } from 'vue-router';
 const route = useRoute()
@@ -11,8 +11,8 @@ const isLoading = ref(false)
 const fetchDetails = async () => {
         try {
           isLoading.value = true
-          const response = await customInstance.get(`/api/v1/bootcamps/${route.params.id}`);
-          console.log(response)
+          const response = await customInstance.get(`/api/v1/courses/${route.params.id}`);
+          console.log(response.data.data)
           bootcampDetails.value = response.data.data;
           isLoading.value = false
           notify({
@@ -37,7 +37,7 @@ fetchDetails()
 </script>
 <template>
     <div>
-        <BootcampDetails :data="bootcampDetails" :isLoading="isLoading" />
+        <BootcampDetails :course="bootcampDetails" :isLoading="isLoading" />
     </div>
 </template>
 <script setup>
